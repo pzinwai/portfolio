@@ -14,8 +14,8 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'Phyo Zin Wai',
-  description: ''
+  title: 'Phyo Zin Wai - Software Engineer',
+  description: 'A software engineer specializing in web development, backend services, and automation.'
 }
 
 export default function RootLayout({

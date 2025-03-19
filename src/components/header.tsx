@@ -3,22 +3,22 @@ import { ThemeToggle } from './theme-toggle'
 
 export default function Header() {
   return (
-    <header className='fixed inset-x-0 top-0 z-50 bg-background/75 py-6 backdrop-blur-sm'>
-      <nav className='container flex max-w-3xl items-center justify-between'>
+    <header className='fixed inset-x-0 top-0 z-50 bg-background/75 backdrop-blur-sm'>
+      <nav className='container flex max-w-3xl items-center py-6 justify-between border-b border-gray-200'>
         <div>
-            <Link href='/' className='font-serif text-2xl font-bold mx-auto'>
+          <Link href='/' className='mx-auto font-serif text-2xl font-bold'>
             PZW
-            </Link>
+          </Link>
         </div>
 
-        <ul className='flex items-center gap-6 text-sm font-light text-muted-foreground sm:gap-10'>
-          <li className='transition-colors hover:text-foreground'>
-            <Link href='/posts'>Notes</Link>
+        <ul className='hidden items-center justify-evenly gap-8 font-medium sm:flex'>
+          <li className='transition-colors hover:text-blue-500'>
+            <Link href='/posts'>Posts</Link>
           </li>
-          <li className='transition-colors hover:text-foreground'>
+          <li className='transition-colors hover:text-blue-500'>
             <Link href='/projects'>Projects</Link>
           </li>
-          <li className='transition-colors hover:text-foreground'>
+          <li className='transition-colors hover:text-blue-500'>
             <Link href='/contact'>Contact</Link>
           </li>
         </ul>
