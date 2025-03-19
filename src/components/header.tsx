@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation' // Import usePathname
 import { ThemeToggle } from './theme-toggle'
 import { Menu } from 'lucide-react'
 import {
@@ -14,6 +15,7 @@ import { Button } from '@/components/ui/button'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
+  const pathname = usePathname() // Get the current route
 
   const handleLinkClick = () => {
     setIsOpen(false)
@@ -30,13 +32,31 @@ export default function Header() {
 
         {/* Desktop Navigation */}
         <ul className='hidden items-center justify-evenly gap-8 font-medium sm:flex'>
-          <li className='transition-colors hover:text-blue-500'>
+          <li
+            className={`transition-colors hover:text-blue-500 ${
+              pathname === '/posts'
+                ? 'underline decoration-blue-500 underline-offset-8'
+                : ''
+            }`}
+          >
             <Link href='/posts'>Posts</Link>
           </li>
-          <li className='transition-colors hover:text-blue-500'>
+          <li
+            className={`transition-colors hover:text-blue-500 ${
+              pathname === '/projects'
+                ? 'underline decoration-blue-500 underline-offset-8'
+                : ''
+            }`}
+          >
             <Link href='/projects'>Projects</Link>
           </li>
-          <li className='transition-colors hover:text-blue-500'>
+          <li
+            className={`transition-colors hover:text-blue-500 ${
+              pathname === '/contact'
+                ? 'underline decoration-blue-500 underline-offset-8'
+                : ''
+            }`}
+          >
             <Link href='/contact'>Contact</Link>
           </li>
         </ul>
@@ -55,34 +75,40 @@ export default function Header() {
                   <SheetTitle>Menu</SheetTitle>
                 </SheetHeader>
                 <nav className='flex flex-col gap-6 px-4 pt-6'>
-                  {' '}
-                  {/* Added padding for indentation */}
                   <div className='flex flex-col space-y-4'>
                     <Link
                       href='/'
-                      className='transition-colors hover:text-blue-500'
+                      className={`transition-colors hover:text-blue-500 ${
+                        pathname === '/' ? 'underline decoration-blue-500 underline-offset-8' : ''
+                      }`}
                       onClick={handleLinkClick}
                     >
                       Home
                     </Link>
                     <Link
                       href='/posts'
+                      className={`transition-colors hover:text-blue-500 ${
+                        pathname === '/posts' ? 'underline decoration-blue-500 underline-offset-8' : ''
+                      }`}
                       onClick={handleLinkClick}
-                      className='transition-colors hover:text-blue-500'
                     >
                       Posts
                     </Link>
                     <Link
                       href='/projects'
+                      className={`transition-colors hover:text-blue-500 ${
+                        pathname === '/projects' ? 'underline decoration-blue-500 underline-offset-8' : ''
+                      }`}
                       onClick={handleLinkClick}
-                      className='transition-colors hover:text-blue-500'
                     >
                       Projects
                     </Link>
                     <Link
                       href='/contact'
+                      className={`transition-colors hover:text-blue-500 ${
+                        pathname === '/contact' ? 'underline decoration-blue-500 underline-offset-8' : ''
+                      }`}
                       onClick={handleLinkClick}
-                      className='transition-colors hover:text-blue-500'
                     >
                       Contact
                     </Link>
