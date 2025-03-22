@@ -14,6 +14,15 @@ export async function generateStaticParams() {
   return slugs
 }
 
+function isValidUrl(url: string): boolean {
+  try {
+    new URL(url) // Attempt to construct a URL object
+    return true
+  } catch {
+    return false
+  }
+}
+
 export default async function Project({
   params
 }: {
@@ -27,7 +36,7 @@ export default async function Project({
   }
 
   const { metadata, content } = project
-  const { title, image, author, publishedAt } = metadata
+  const { title, image, author, created_at } = metadata
 
   return (
     <section className='pb-24 pt-32'>
@@ -37,10 +46,12 @@ export default async function Project({
           className='mb-8 inline-flex items-center gap-2 text-sm font-light text-muted-foreground transition-colors hover:text-foreground'
         >
           <ArrowLeftIcon className='h-5 w-5' />
-          <span>Back to projects</span>
+          <span className='transition-colors hover:text-blue-500'>
+            Back to projects
+          </span>
         </Link>
 
-        {image && (
+        {image && isValidUrl(image) ? (
           <div className='relative mb-6 h-96 w-full overflow-hidden rounded-lg'>
             <Image
               src={image}
@@ -49,12 +60,16 @@ export default async function Project({
               fill
             />
           </div>
+        ) : (
+          <div className='relative mb-6 flex h-96 w-full items-center justify-center overflow-hidden rounded-lg bg-gray-200'>
+            <span className='text-sm text-gray-500'>Image not available</span>
+          </div>
         )}
 
         <header>
           <h1 className='title'>{title}</h1>
           <p className='mt-3 text-xs text-muted-foreground'>
-            {author} / {formatDate(publishedAt ?? '')}
+            {author} / {formatDate(created_at ?? '')}
           </p>
         </header>
 

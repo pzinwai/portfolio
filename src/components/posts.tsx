@@ -19,9 +19,9 @@ export default function Posts({ posts }: { posts: PostMetadata[] }) {
               </p>
             </div>
 
-            {post.publishedAt && (
+            {post.created_at && (
               <p className='mt-1 text-sm font-light'>
-                {formatDate(post.publishedAt)}
+                {formatDate(post.created_at)}
               </p>
             )}
           </Link>

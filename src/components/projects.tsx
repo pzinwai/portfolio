@@ -34,9 +34,11 @@ export default function Projects({
               <p className='line-clamp-1 text-sm text-muted-foreground'>
                 {project.summary}
               </p>
-              <p className='text-xs font-light text-muted-foreground'>
-                {formatDate(project.publishedAt ?? '')}
-              </p>
+              {project.created_at && (
+                <p className='text-xs font-light text-muted-foreground'>
+                  {formatDate(project.created_at ?? '')}
+                </p>
+              )}
             </div>
           </Link>
         </li>

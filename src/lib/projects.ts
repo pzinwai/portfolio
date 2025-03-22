@@ -1,8 +1,8 @@
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
+import { createClient } from '@supabase/supabase-js'
 
-const rootDirectory = path.join(process.cwd(), 'src' ,'content', 'projects')
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+const supabase = createClient(supabaseUrl, supabaseKey)
 
 export type Project = {
   metadata: ProjectMetadata
@@ -14,51 +14,44 @@ export type ProjectMetadata = {
   summary?: string
   image?: string
   author?: string
-  publishedAt?: string
+  created_at?: string
   slug: string
 }
 
 export async function getProjectBySlug(slug: string): Promise<Project | null> {
-  try {
-    const filePath = path.join(rootDirectory, `${slug}.mdx`)
-    const fileContent = fs.readFileSync(filePath, { encoding: 'utf8' })
-    const { data, content } = matter(fileContent)
-    return { metadata: { ...data, slug }, content }
-  } catch {
-    return null
-  }
+  const { data, error } = await supabase
+  .from('projects')
+  .select('title, summary, image, author, created_at, slug, content')
+  .eq('slug', slug)
+  .single()
+
+if (error) {
+  console.error('Error fetching post by slug:', error)
+  return null
+}
+
+if (!data) {
+  return null
+}
+
+const { title, summary, image, author, created_at, content } = data
+return {
+  metadata: { title, summary, image, author, created_at, slug },
+  content
+}
 }
 
 export async function getProjects(limit?: number): Promise<ProjectMetadata[]> {
-  const files = fs.readdirSync(rootDirectory)
+  const { data, error } = await supabase
+    .from('projects')
+    .select('title, summary, image, author, created_at, slug, content')
+    .order('created_at', { ascending: false })
+    .limit(limit || 100) // Default limit to 100 if not provided
 
-  // Filter out unwanted files (like .DS_Store)
-  const validFiles = files.filter(file => {
-    // Exclude .DS_Store and any other unwanted files
-    return file !== '.DS_Store' && !file.startsWith('.');
-  });
-
-  const projects = validFiles
-    .map(file => getProjectMetadata(file))
-    .sort((a, b) => {
-      if (new Date(a.publishedAt ?? '') < new Date(b.publishedAt ?? '')) {
-        return 1
-      } else {
-        return -1
-      }
-    })
-
-  if (limit) {
-    return projects.slice(0, limit)
+  if (error) {
+    console.error('Error fetching posts:', error)
+    return []
   }
 
-  return projects
-}
-
-export function getProjectMetadata(filepath: string): ProjectMetadata {
-  const slug = filepath.replace(/\.mdx$/, '')
-  const filePath = path.join(rootDirectory, filepath)
-  const fileContent = fs.readFileSync(filePath, { encoding: 'utf8' })
-  const { data } = matter(fileContent)
-  return { ...data, slug }
+  return data || []
 }

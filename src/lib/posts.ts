@@ -1,8 +1,8 @@
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
+import { createClient } from '@supabase/supabase-js'
 
-const rootDirectory = path.join(process.cwd(), 'src', 'content', 'posts')
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+const supabase = createClient(supabaseUrl, supabaseKey)
 
 export type Post = {
   metadata: PostMetadata
@@ -14,56 +14,44 @@ export type PostMetadata = {
   summary?: string
   image?: string
   author?: string
-  publishedAt?: string
-  slug: string
+  created_at?: string
+  slug?: string
 }
 
 export async function getPostBySlug(slug: string): Promise<Post | null> {
-  try {
-    const filePath = path.join(rootDirectory, `${slug}.mdx`)
-    const fileContent = fs.readFileSync(filePath, { encoding: 'utf8' })
-    const { data, content } = matter(fileContent)
-    return { metadata: { ...data, slug }, content }
-  } catch {
+  const { data, error } = await supabase
+    .from('articles')
+    .select('title, summary, image, author, created_at, slug, content')
+    .eq('slug', slug)
+    .single()
+
+  if (error) {
+    console.error('Error fetching post by slug:', error)
     return null
+  }
+
+  if (!data) {
+    return null
+  }
+
+  const { title, summary, image, author, created_at, content } = data
+  return {
+    metadata: { title, summary, image, author, created_at, slug },
+    content
   }
 }
 
 export async function getPosts(limit?: number): Promise<PostMetadata[]> {
-  if (!fs.existsSync(rootDirectory)) {
-    console.error(`Directory not found: ${rootDirectory}`)
+  const { data, error } = await supabase
+    .from('articles')
+    .select('title, summary, image, author, created_at, slug, content')
+    .order('created_at', { ascending: false })
+    .limit(limit || 100) // Default limit to 100 if not provided
+
+  if (error) {
+    console.error('Error fetching posts:', error)
     return []
   }
 
-  const files = fs.readdirSync(rootDirectory)
-
-  // Filter out unwanted files (like .DS_Store)
-  const validFiles = files.filter(file => {
-    // Exclude .DS_Store and any other unwanted files
-    return file !== '.DS_Store' && !file.startsWith('.');
-  });
-
-  const posts = validFiles
-    .map(file => getPostMetadata(file))
-    .sort((a, b) => {
-      if (new Date(a.publishedAt ?? '') < new Date(b.publishedAt ?? '')) {
-        return 1
-      } else {
-        return -1
-      }
-    })
-
-  if (limit) {
-    return posts.slice(0, limit)
-  }
-
-  return posts
-}
-
-export function getPostMetadata(filepath: string): PostMetadata {
-  const slug = filepath.replace(/\.mdx$/, '')
-  const filePath = path.join(rootDirectory, filepath)
-  const fileContent = fs.readFileSync(filePath, { encoding: 'utf8' })
-  const { data } = matter(fileContent)
-  return { ...data, slug }
+  return data || []
 }
