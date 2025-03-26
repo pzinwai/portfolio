@@ -39,7 +39,7 @@ export default function Experiences() {
           AiChat Pte. Ltd
           <ArrowUpRight className='h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1' />
         </a>
-        <p className='text-muted-foreground'>Technical Director</p>
+        <p className='text-muted-foreground'>Senior Software Developer</p>
         <p className='text-muted-foreground'>Jul 2017 – Sep 2022</p>
       </div>
       <div className='mt-4'>
