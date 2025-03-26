@@ -23,12 +23,10 @@ function isValidUrl(url: string): boolean {
   }
 }
 
-export default async function Post({
-  params
-}: {
-  params: { slug: string }
-}) {
-  const { slug } = params // Destructure slug directly (no need to await)
+type Params = Promise<{ slug: string }>
+
+export default async function Post({ params }: { params: Params }) {
+  const { slug } = await params
 
   const post = await getPostBySlug(slug)
 
@@ -47,7 +45,9 @@ export default async function Post({
           className='mb-8 inline-flex items-center gap-2 text-sm font-light text-muted-foreground transition-colors hover:text-foreground'
         >
           <ArrowLeftIcon className='h-5 w-5' />
-          <span className="transition-colors hover:text-blue-500">Back to posts</span>
+          <span className='transition-colors hover:text-blue-500'>
+            Back to posts
+          </span>
         </Link>
 
         {image && isValidUrl(image) ? (
@@ -60,7 +60,7 @@ export default async function Post({
             />
           </div>
         ) : (
-          <div className='relative mb-6 h-96 w-full overflow-hidden rounded-lg bg-gray-200 flex items-center justify-center'>
+          <div className='relative mb-6 flex h-96 w-full items-center justify-center overflow-hidden rounded-lg bg-gray-200'>
             <span className='text-sm text-gray-500'>Image not available</span>
           </div>
         )}

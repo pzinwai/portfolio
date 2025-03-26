@@ -4,6 +4,7 @@ import { z } from 'zod'
 import { Resend } from 'resend'
 import { ContactFormSchema } from '@/lib/schemas'
 import ContactFormEmail from '@/emails/contact-form-email'
+import React from 'react'
 
 type ContactFormInputs = z.infer<typeof ContactFormSchema>
 const resend = new Resend(process.env.RESEND_API_KEY)
@@ -15,18 +16,26 @@ export async function sendEmail(data: ContactFormInputs) {
     return { error: result.error.format() }
   }
 
+  const fromEmail = process.env.FROM_EMAIL
+  const contactEmail = process.env.CONTACT_EMAIL
+
+  if (!fromEmail || !contactEmail) {
+    throw new Error(
+      'Environment variables FROM_EMAIL or CONTACT_EMAIL are not defined'
+    )
+  }
+
   try {
     const { name, email, message } = result.data
-    const { data, error } = await resend.emails.send({
-      from: '<email@domain.com>',
-      to: [email],
-      cc: ['<email@domain.com>'],
+    const { data: emailData, error } = await resend.emails.send({
+      from: fromEmail,
+      to: [contactEmail],
       subject: 'Contact form submission',
       text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
-      react: ContactFormEmail({ name, email, message })
+      react: React.createElement(ContactFormEmail, { name, email, message }) // Ensure this is a ReactNode
     })
 
-    if (!data || error) {
+    if (!emailData || error) {
       throw new Error('Failed to send email')
     }
 

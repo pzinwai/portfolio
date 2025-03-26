@@ -1,22 +1,20 @@
-interface ContactFormEmailProps {
-  name: string
-  email: string
-  message: string
-}
+import React from 'react'
 
-const ContactFormEmail: React.FC<Readonly<ContactFormEmailProps>> = ({
+export default function ContactFormEmail({
   name,
   email,
   message
-}) => (
-  <div>
-    <h1>Contact form submission</h1>
-    <p>
-      From <strong>{name}</strong> at {email}
-    </p>
-    <h2>Message:</h2>
-    <p>{message}</p>
-  </div>
-)
-
-export default ContactFormEmail
+}: {
+  name: string
+  email: string
+  message: string
+}) {
+  return (
+    <div>
+      <h1>Contact Form Submission</h1>
+      <p><strong>Name:</strong> {name}</p>
+      <p><strong>Email:</strong> {email}</p>
+      <p><strong>Message:</strong> {message}</p>
+    </div>
+  )
+}

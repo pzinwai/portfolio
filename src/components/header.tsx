@@ -34,21 +34,21 @@ export default function Header() {
         <ul className='hidden items-center justify-evenly gap-8 font-medium sm:flex'>
           <li
             className={`transition-colors hover:text-blue-500 ${
+              pathname === '/skills'
+                ? 'underline decoration-blue-500 underline-offset-8'
+                : ''
+            }`}
+          >
+            <Link href='/skills'>Skills</Link>
+          </li>
+          <li
+            className={`transition-colors hover:text-blue-500 ${
               pathname === '/posts'
                 ? 'underline decoration-blue-500 underline-offset-8'
                 : ''
             }`}
           >
             <Link href='/posts'>Posts</Link>
-          </li>
-          <li
-            className={`transition-colors hover:text-blue-500 ${
-              pathname === '/projects'
-                ? 'underline decoration-blue-500 underline-offset-8'
-                : ''
-            }`}
-          >
-            <Link href='/projects'>Projects</Link>
           </li>
           <li
             className={`transition-colors hover:text-blue-500 ${
@@ -79,34 +79,42 @@ export default function Header() {
                     <Link
                       href='/'
                       className={`transition-colors hover:text-blue-500 ${
-                        pathname === '/' ? 'underline decoration-blue-500 underline-offset-8' : ''
+                        pathname === '/'
+                          ? 'underline decoration-blue-500 underline-offset-8'
+                          : ''
                       }`}
                       onClick={handleLinkClick}
                     >
                       Home
                     </Link>
                     <Link
+                      href='/skills'
+                      className={`transition-colors hover:text-blue-500 ${
+                        pathname === '/skills'
+                          ? 'underline decoration-blue-500 underline-offset-8'
+                          : ''
+                      }`}
+                      onClick={handleLinkClick}
+                    >
+                      Skills
+                    </Link>
+                    <Link
                       href='/posts'
                       className={`transition-colors hover:text-blue-500 ${
-                        pathname === '/posts' ? 'underline decoration-blue-500 underline-offset-8' : ''
+                        pathname === '/posts'
+                          ? 'underline decoration-blue-500 underline-offset-8'
+                          : ''
                       }`}
                       onClick={handleLinkClick}
                     >
                       Posts
                     </Link>
                     <Link
-                      href='/projects'
-                      className={`transition-colors hover:text-blue-500 ${
-                        pathname === '/projects' ? 'underline decoration-blue-500 underline-offset-8' : ''
-                      }`}
-                      onClick={handleLinkClick}
-                    >
-                      Projects
-                    </Link>
-                    <Link
                       href='/contact'
                       className={`transition-colors hover:text-blue-500 ${
-                        pathname === '/contact' ? 'underline decoration-blue-500 underline-offset-8' : ''
+                        pathname === '/contact'
+                          ? 'underline decoration-blue-500 underline-offset-8'
+                          : ''
                       }`}
                       onClick={handleLinkClick}
                     >
