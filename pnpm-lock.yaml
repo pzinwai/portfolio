@@ -12,6 +12,7 @@ specifiers:
   '@types/node': ^20
   '@types/react': ^19
   '@types/react-dom': ^19
+  '@vercel/analytics': ^1.5.0
   '@vercel/speed-insights': ^1.2.0
   autoprefixer: ^10.4.21
   class-variance-authority: ^0.7.1
@@ -45,6 +46,7 @@ dependencies:
   '@radix-ui/react-slot': 1.1.2_msvof2bmok7op3b2kp7cgcwikq
   '@supabase/supabase-js': 2.49.1
   '@tailwindcss/typography': 0.5.16_tailwindcss@3.4.17
+  '@vercel/analytics': 1.5.0_next@15.2.2+react@19.0.0
   '@vercel/speed-insights': 1.2.0_next@15.2.2+react@19.0.0
   class-variance-authority: 0.7.1
   clsx: 2.1.1
@@ -1484,6 +1486,36 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@vercel/analytics/1.5.0_next@15.2.2+react@19.0.0:
+    resolution: {integrity: sha512-MYsBzfPki4gthY5HnYN7jgInhAZ7Ac1cYDoRWFomwGHWEX7odTEzbtg9kf/QSo7XEsEAqlQugA6gJ2WS2DEa3g==}
+    peerDependencies:
+      '@remix-run/react': ^2
+      '@sveltejs/kit': ^1 || ^2
+      next: '>= 13'
+      react: ^18 || ^19 || ^19.0.0-rc
+      svelte: '>= 4'
+      vue: ^3
+      vue-router: ^4
+    peerDependenciesMeta:
+      '@remix-run/react':
+        optional: true
+      '@sveltejs/kit':
+        optional: true
+      next:
+        optional: true
+      react:
+        optional: true
+      svelte:
+        optional: true
+      vue:
+        optional: true
+      vue-router:
+        optional: true
+    dependencies:
+      next: 15.2.2_upmzqgzhjrquwzo2dphtigtdgi
+      react: 19.0.0
+    dev: false
 
   /@vercel/speed-insights/1.2.0_next@15.2.2+react@19.0.0:
     resolution: {integrity: sha512-y9GVzrUJ2xmgtQlzFP2KhVRoCglwfRQgjyfY607aU0hh0Un6d0OUyrJkjuAlsV18qR4zfoFPs/BiIj9YDS6Wzw==}

@@ -4,7 +4,8 @@ import './globals.css'
 import Providers from '@/components/providers'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Analytics } from '@vercel/analytics/react'
 
 import { cn } from '@/lib/utils'
 
@@ -16,7 +17,8 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: 'Phyo Zin Wai - Software Engineer',
-  description: 'A software engineer specializing in web development, backend services, and automation.'
+  description:
+    'A software engineer specializing in web development, backend services, and automation.'
 }
 
 export default function RootLayout({
@@ -38,6 +40,7 @@ export default function RootLayout({
           <main className='grow'>{children}</main>
           <Footer />
           <SpeedInsights />
+          <Analytics />
         </Providers>
       </body>
     </html>
