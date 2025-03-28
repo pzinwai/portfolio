@@ -23,12 +23,12 @@ export default function Skills() {
             </tr>
             <tr>
               <td className='px-4'>• Python</td>
-              <td className='px-4'>• AWS (EC2, S3, Lambda, RDS)</td>
+              <td className='px-4'>• AWS</td>
               <td className='px-4'>• MySQL</td>
             </tr>
             <tr>
               <td className='px-4'>• React.js</td>
-              <td className='px-4'></td>
+              <td className='px-4'>• Azure</td>
               <td className='px-4'>• MongoDB</td>
             </tr>
             <tr>
@@ -43,17 +43,17 @@ export default function Skills() {
             </tr>
             <tr>
               <td className='px-4'>• Laravel/PHP</td>
-              <td className='px-4'></td>
+              <td className='px-4'>• Jenkins</td>
               <td className='px-4'>• Memcached</td>
             </tr>
             <tr>
               <td className='px-4'>• .NET Core (C#)</td>
-              <td className='px-4'></td>
+              <td className='px-4'>• Octopus Deploy</td>
               <td className='px-4'></td>
             </tr>
             <tr>
               <td className='px-4'>• Java</td>
-              <td className='px-4'></td>
+              <td className='px-4'>• Kafka</td>
               <td className='px-4'></td>
             </tr>
             <tr>
