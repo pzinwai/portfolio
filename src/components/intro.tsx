@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import authorImage from '../../public/images/authors/phyo.png'
+import Link from 'next/link'
 
 export default function Intro() {
   const resumeUrl = process.env.NEXT_PUBLIC_RESUME_URL // Access the resume URL from the environment variable
@@ -34,21 +35,19 @@ export default function Intro() {
           >
             GitHub
           </a>
-          {resumeUrl && (
-            <>
-              {' '}and{' '}
-              <a
-                href={resumeUrl}
-                target='_blank'
-                rel='noopener noreferrer'
-                className='underline'
-              >
-                Resume
-              </a>
-            </>
-          )}
           .
         </p>
+        {resumeUrl && (
+          <>
+            <div className='mt-4 flex'>
+              <Link href={resumeUrl} target='_blank' download>
+                <button className='rounded-lg bg-blue-600 px-6 py-3 text-white shadow-md transition duration-300 hover:bg-blue-700'>
+                  Download Resume
+                </button>
+              </Link>
+            </div>
+          </>
+        )}
       </div>
       <div className='relative'>
         <Image
